@@ -3,7 +3,7 @@ import joblib
 
 # load the pre-trained model
 model= joblib.load('clasi_model.pkl')
-encoder= joblib.load('label_encodr.pkl')
+encoder= joblib.load('label_encoder.pkl')
 
 #Streamlit UI
 # Streamlit UI
