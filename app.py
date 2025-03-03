@@ -1,13 +1,9 @@
 import streamlit as st
 import joblib
 
-# load the pre-trained model
-model= joblib.load('clasi_model.pkl')
-encoder= joblib.load('label_encoder.pkl')
-vectorizer = joblib.load("vectorizer.pkl") 
+# Load the pre-trained model
+model = joblib.load("sms_spam_model.pkl")
 
-
-#Streamlit UI
 # Streamlit UI
 st.title("📱 SMS Spam Classifier")
 st.write("Enter an SMS message to check if it's Ham or Spam!")
@@ -21,16 +17,11 @@ if st.button("Predict"):
         st.warning("Please enter some text to classify.")
     else:
         try:
-           # Convert text to the same format as training data
-            transformed_text = vectorizer.transform([sms_text]).toarray()  # Apply transformation
-
             # Make prediction using the trained model
-            prediction = model.predict(transformed_text)  # Pass numerical features
-            sms_type = encoder.inverse_transform(prediction)
+            prediction = model.predict([sms_text])
 
             # Display result
-            # Display result
-            if sms_type[0] == "spam":  # Use the decoded prediction
+            if prediction[0] == 1:
                 st.error("🚨 This message is **Spam**!")
             else:
                 st.success("✅ This message is **Ham**!")
