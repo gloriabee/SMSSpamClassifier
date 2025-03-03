@@ -29,7 +29,8 @@ if st.button("Predict"):
             sms_type = encoder.inverse_transform(prediction)
 
             # Display result
-            if prediction[0] == 1:
+            # Display result
+            if sms_type[0] == "spam":  # Use the decoded prediction
                 st.error("🚨 This message is **Spam**!")
             else:
                 st.success("✅ This message is **Ham**!")
