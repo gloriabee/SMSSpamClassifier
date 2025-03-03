@@ -4,6 +4,8 @@ import joblib
 # load the pre-trained model
 model= joblib.load('clasi_model.pkl')
 encoder= joblib.load('label_encoder.pkl')
+vectorizer = joblib.load("vectorizer.pkl") 
+
 
 #Streamlit UI
 # Streamlit UI
@@ -19,8 +21,11 @@ if st.button("Predict"):
         st.warning("Please enter some text to classify.")
     else:
         try:
-            # Make prediction using the loaded model
-            prediction = model.predict([sms_text])  # Pass the text as a list
+           # Convert text to the same format as training data
+            transformed_text = vectorizer.transform([sms_text]).toarray()  # Apply transformation
+
+            # Make prediction using the trained model
+            prediction = model.predict(transformed_text)  # Pass numerical features
             sms_type = encoder.inverse_transform(prediction)
 
             # Display result
